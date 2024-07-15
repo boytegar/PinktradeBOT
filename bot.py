@@ -152,6 +152,7 @@ def main():
 
     auto_clear_task = input("Auto clear task? (y/n): ").strip().lower()
     auto_upgraded_astro = input("Auto Upgrade Astronauts ? (y/n) : ").strip().lower()
+    cap_level = input("Set Limit Max level upgrade astronauts ? (0 for set not limited) : ").strip()
     while True:
         queries = load_credentials()
         waiting_time = random.randint(3600,3700)
@@ -224,13 +225,16 @@ def main():
                         print(f"Claim : {nextclaim_formatted}")
                     
                     if auto_upgraded_astro == 'y':
-                        upgrade(query_data, total_earn, astro_level)
+                        if int(cap_level) < astro_level:
+                            upgrade(query_data, total_earn, astro_level)
+                        else:
+                            print("level has limited")
                 else:
                     print(f"Invalid Query. Account {index} Failed")
 
             end_time = time.time()
             delay = waiting_time - (end_time-start_time)
-            print(f"\n========== ALL ID DONE ==========")   
+            print(f"========== ALL ID DONE ==========")   
             printdelay(delay)
             time.sleep(delay)
 
