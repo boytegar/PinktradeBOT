@@ -136,12 +136,12 @@ def clear_tasks(query):
     tasks = get_tasks(query)
     time.sleep(2)
     for task in tasks:
-        print(f"Task :  Clearing {task['title']}")
+        print(f"Task :  Progressing {task['title']}")
         while True:
             response = claim_task(query, task['id'])
             time.sleep(3)
             if response.status_code == 201:
-                print(f"Task : {task['title']} Clear!")
+                print(f"Task : {task['title']} Done!")
                 break
 
             elif response.status_code == 400:
@@ -196,7 +196,7 @@ def main():
                         squad_total_earn = squad_pool['totalEarn']
                         totalUser = squad_pool['totalUser']
                     else:
-                        print("No Squad found, joining squad...")
+                        print("No Have Squad, joining squad...")
                         time.sleep(2)
                         join_response = join_squad(query_data)
                         if join_response.status_code == 200:
