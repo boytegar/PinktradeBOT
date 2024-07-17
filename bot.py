@@ -52,11 +52,24 @@ def getuseragent(index):
 def cek_balance(query):
     url = 'https://bot-api.pinktrade.fi/pinktrade/api/v1/airdrop'
     headers['Authorization'] = query
-    for attempt in range(3):
+    repeat = 1
+    while True:
+        time.sleep(3)
         response = requests.get(url, headers=headers)
-        if response.status_code == 200:
+        # print(response)
+        if response.status_code >= 500:
+            print(f'Error 500 {response.json()}')
+        elif response.status_code >= 400:
+            print(f'Error 400 {response.json()}')
+        elif response.status_code == 200:
             return response.json()
-    return None
+        
+        if repeat == 5:
+            print("failed to get data")
+            return None
+        print(f"trying {repeat}")
+        repeat +=1
+            
 
 def claim_balance(query):
     url = 'https://bot-api.pinktrade.fi/pinktrade/api/v1/airdrop/claim-mint-reward'
